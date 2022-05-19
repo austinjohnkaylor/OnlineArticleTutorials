@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace PocketBook.Controllers;
+namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

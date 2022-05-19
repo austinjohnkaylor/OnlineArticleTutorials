@@ -1,4 +1,4 @@
-namespace PocketBook;
+namespace API;
 
 public class WeatherForecast
 {
