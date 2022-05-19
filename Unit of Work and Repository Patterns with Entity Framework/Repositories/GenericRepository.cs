@@ -8,26 +8,26 @@ namespace API.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private ApplicationDbContext _context;
-    protected readonly DbSet<T> _dbSet;
-    protected readonly ILogger _logger;
+    protected readonly DbSet<T> DbSet;
+    protected readonly ILogger Logger;
 
     public GenericRepository(
         ApplicationDbContext context,
         ILogger logger)
     {
         _context = context;
-        _dbSet = context.Set<T>();
-        _logger = logger;
+        DbSet = context.Set<T>();
+        Logger = logger;
     }
 
     public virtual async Task<T> GetById(Guid id)
     {
-        return await _dbSet.FindAsync(id);
+        return await DbSet.FindAsync(id);
     }
 
     public virtual async Task<bool> Add(T entity)
     {
-        await _dbSet.AddAsync(entity);
+        await DbSet.AddAsync(entity);
         return true;
     }
 
@@ -43,7 +43,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
     {
-        return await _dbSet.Where(predicate).ToListAsync();
+        return await DbSet.Where(predicate).ToListAsync();
     }
 
     public virtual Task<bool> Upsert(T entity)

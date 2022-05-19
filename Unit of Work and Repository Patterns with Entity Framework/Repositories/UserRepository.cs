@@ -13,11 +13,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         try
         {
-            return await _dbSet.ToListAsync();
+            return await DbSet.ToListAsync();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "{Repo} All function error", typeof(UserRepository));
+            Logger.LogError(ex, "{Repo} All function error", typeof(UserRepository));
             return new List<User>();
         }
     }
@@ -26,7 +26,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         try
         {
-            User? existingUser = await _dbSet.Where(x => x.Id == entity.Id)
+            User? existingUser = await DbSet.Where(x => x.Id == entity.Id)
                 .FirstOrDefaultAsync();
 
             if (existingUser == null)
@@ -40,7 +40,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "{Repo} Upsert function error", typeof(UserRepository));
+            Logger.LogError(ex, "{Repo} Upsert function error", typeof(UserRepository));
             return false;
         }
     }
@@ -49,18 +49,18 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         try
         {
-            var exist = await _dbSet.Where(x => x.Id == id)
+            var exist = await DbSet.Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
             if (exist == null) return false;
 
-            _dbSet.Remove(exist);
+            DbSet.Remove(exist);
 
             return true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "{Repo} Delete function error", typeof(UserRepository));
+            Logger.LogError(ex, "{Repo} Delete function error", typeof(UserRepository));
             return false;
         }
     }
