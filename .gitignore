@@ -129,6 +129,7 @@ fabric.properties
 # AWS User-specific
 
 # Generated files
+.idea/
 
 # Sensitive or high-churn files
 
