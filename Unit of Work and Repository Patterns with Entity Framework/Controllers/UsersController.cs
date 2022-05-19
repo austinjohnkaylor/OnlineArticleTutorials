@@ -27,7 +27,7 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
-    [HttpGet]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetItem(Guid id)
     {
         _logger.LogInformation("Getting user by Id: {Guid}", id);
@@ -54,21 +54,18 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateItem(Guid id, User user)
+    public async Task<IActionResult> UpdateItem(User user)
     {
-        if(id != user.Id)
-            return BadRequest();
-        
-        _logger.LogInformation("Updating User with Id {Guid} or inserting a new User", id);
+        _logger.LogInformation("Updating User with Id {Guid} or inserting a new User", user.Id);
 
         await _unitOfWork.Users.Upsert(user);
         await _unitOfWork.Complete();
 
-        // Following up the REST standart on update we need to return NoContent
+        // Following up the REST standard on update we need to return NoContent
         return NoContent();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
         User? item = await _unitOfWork.Users.GetById(id);
