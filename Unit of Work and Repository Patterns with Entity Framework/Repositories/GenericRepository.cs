@@ -8,8 +8,8 @@ namespace API.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private ApplicationDbContext _context;
-    private readonly DbSet<T> _dbSet;
-    private readonly ILogger _logger;
+    protected readonly DbSet<T> _dbSet;
+    protected readonly ILogger _logger;
 
     public GenericRepository(
         ApplicationDbContext context,
